@@ -1,0 +1,10 @@
+import django.db.models.deletion
+from django.conf import settings
+from django.db import migrations,models
+class Migration(migrations.Migration):
+    initial=True
+    dependencies=[migrations.swappable_dependency(settings.AUTH_USER_MODEL)]
+    operations=[
+      migrations.CreateModel(name="Category",fields=[("id",models.BigAutoField(auto_created=True,primary_key=True,serialize=False,verbose_name="ID")),("title",models.CharField(max_length=100,unique=True)),("slug",models.SlugField(max_length=110,unique=True))]),
+      migrations.CreateModel(name="MenuItem",fields=[("id",models.BigAutoField(auto_created=True,primary_key=True,serialize=False,verbose_name="ID")),("title",models.CharField(db_index=True,max_length=150)),("price",models.DecimalField(decimal_places=2,max_digits=7)),("featured",models.BooleanField(default=False)),("category",models.ForeignKey(on_delete=django.db.models.deletion.PROTECT,related_name="menu_items",to="restaurant.category"))]),
+      migrations.CreateModel(name="Booking",fields=[("id",models.BigAutoField(auto_created=True,primary_key=True,serialize=False,verbose_name="ID")),("name",models.CharField(max_length=100)),("no_of_guests",models.PositiveSmallIntegerField(default=1)),("booking_date",models.DateTimeField()),("user",models.ForeignKey(blank=True,null=True,on_delete=django.db.models.deletion.SET_NULL,related_name="bookings",to=settings.AUTH_USER_MODEL))],options={"ordering":["booking_date"]})]
